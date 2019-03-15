@@ -1,0 +1,49 @@
+version: 2
+
+ccc: &ccc circleci/command-convenience:0.1
+
+workflows:
+  version: 2
+  test-and-publish:
+    jobs:
+      - test:
+          context: org-global
+          filters:
+            branches:
+              ignore: master
+      - publish:
+          context: org-global
+          filters:
+            branches:
+              only: master
+
+jobs:
+  test:
+    docker:
+      - image: *ccc
+        auth:
+          username: $DOCKER_HUB_USER
+          password: $DOCKER_HUB_PASSWORD
+        environment:
+          NAME: docker-coreos-toolbox-ubuntu
+          DOCKERFILE_PATH: Dockerfile
+          DOCKER_REGISTRY: none
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: publish
+
+  publish:
+    docker:
+      - image: *ccc
+        auth:
+          username: $DOCKER_HUB_USER
+          password: $DOCKER_HUB_PASSWORD
+        environment:
+          NAME: docker-coreos-toolbox-ubuntu
+          DOCKERFILE_PATH: Dockerfile
+          DOCKER_REGISTRY: dockerhub
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: publish
