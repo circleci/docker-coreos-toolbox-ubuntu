@@ -8,8 +8,8 @@ We use this solution in production on our classified-ad site: [apro.hu](http://a
 
 ## Install
 
-- Copy the .toolboxrc file into /home/core/.toolboxrc 
-	.toolboxrc included in this repo is just an example. Actual copy deployed to kubernetes cluster is managed here: https://github.com/circleci/infrastructure/blob/master/terraform/cci/modules/kubernetes-kubectl-v2/files/.toolboxrc
+- Create .toolboxrc file in /home/core
+	See .toolboxrc.example for an example. Actual copy deployed to kubernetes cluster is managed here: https://github.com/circleci/infrastructure/blob/master/terraform/cci/modules/kubernetes-kubectl-v2/files/.toolboxrc
 - Start "toolbox" command
 
 ## Features
