@@ -8,13 +8,9 @@ We use this solution in production on our classified-ad site: [apro.hu](http://a
 
 ## Install
 
-- Copy the .toolboxrc file into /home/core/.toolboxrc
+- Create .toolboxrc file in /home/core
+	See .toolboxrc.example for an example. Actual copy deployed to kubernetes cluster is managed here: https://github.com/circleci/infrastructure/blob/master/terraform/cci/modules/kubernetes-kubectl-v2/files/.toolboxrc
 - Start "toolbox" command
-
-After install you can remove the docker image, no longer needed (it is extracted to /var/lib/toolbox):
-```
-docker rmi pickapp/docker-coreos-toolbox-ubuntu
-```
 
 ## Features
 
@@ -22,14 +18,14 @@ docker rmi pickapp/docker-coreos-toolbox-ubuntu
 - Similar environment as base CoreOS
 - Using the core user as default with it's home directory mounted
 - CoreOS root directory is mounted under /media/root
-- CoreOS tools are usable: etcdctl, fleetctl, even docker
+- CoreOS tools are usable: etcdctl, docker
 - Apt package manager to install any deb packages
 - tmux, Midnight Commander, etc.
 
 ## Usage
 
 Just start toolbox command. You will be in a virtual machine (used with systemd-nspawn) with most
-CoreOS tools working like fleetctl, etcdctl and docker.
+CoreOS tools working like etcdctl and docker.
 
 ### How to use tmux on CoreOS
 
@@ -40,10 +36,4 @@ toolbox tmux
 If you detach it, it is running in the background, so you can reattach it again with:
 ```
 toolbox tmux attach -t 0
-```
-
-Inside tmux you can monitor your services with flettctl and etcdctl or even with docker. Eg.:
-```
-watch -t -n1 fleetctl list-units -no-legend
-fleetctl journal -f loadbalancer
 ```
