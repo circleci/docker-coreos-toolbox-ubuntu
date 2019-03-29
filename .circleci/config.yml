@@ -1,6 +1,7 @@
 version: 2
 
 ccc: &ccc circleci/command-convenience:0.1
+docker_version: &docker_version 18.09.3
 
 workflows:
   version: 2
@@ -30,7 +31,8 @@ jobs:
           DOCKER_REGISTRY: none
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: *docker_version
       - run: publish
 
   publish:
@@ -45,5 +47,6 @@ jobs:
           DOCKER_REGISTRY: dockerhub
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: *docker_version
       - run: publish
